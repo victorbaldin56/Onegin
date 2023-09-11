@@ -9,3 +9,7 @@ The original text of the poem remains untouched.
 git clone https://github.com/victorbaldin56/Onegin
 make
 ```
+
+## Usage
+Onegin accepts a single text file and gives the output to the other file.
+To run, enter: ```$(RUNCOMMAND) INPUTFILE```.
