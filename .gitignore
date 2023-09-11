@@ -23,3 +23,7 @@
 *.exe
 *.out
 *.app
+onegin
+
+# Plain text
+*.txt
