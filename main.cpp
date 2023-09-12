@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
             return 0;
         }
         
+        FILE *ostream = fopen("output.txt", "a");
         char *buf = readtext(argv[1]);
 
         if (!buf) {
@@ -29,11 +30,11 @@ int main(int argc, char **argv) {
         printf("main: call parsebuf\n");
 
         char **text = parsebuf(buf);
-        FILE *ostream = fopen("output.txt", "a");
-        printf("success text allocation\n");
 
         StringSort(text, START);
+        #ifndef NDEBUG
         printf("success sort\n");
+        #endif
         print_text(text, ostream);
 
         StringSort(text, END);
