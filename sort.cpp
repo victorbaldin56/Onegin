@@ -3,6 +3,10 @@
 #include "sort.h"
 #include "textlib.h"
 
+void Qsort(Data *data, bool cmpend) {
+    
+}
+
 void StringSort(char **text, bool cmpend) {
     assert(text);
 
