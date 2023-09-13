@@ -79,7 +79,7 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
             s2++;
         }
 
-        while (count1-- && count2--) {
+        while (count1 && count2) {
             if (!isalpha(*s1)) {
                 s1--;
                 count1--;
@@ -90,7 +90,7 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
                 count2--;
             }
 
-            if (!count) {
+            if (!count1 || !count2) {
                 return 0;
             }
             
@@ -98,6 +98,8 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
                 return *s1 - *s2;
             }
 
+            count1--;
+            count2--;
             s1--;
             s2--;
         }    
