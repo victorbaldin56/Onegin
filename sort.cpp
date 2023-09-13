@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
+#include <ctype.h>
 #include "sort.h"
 #include "textlib.h"
-
-static bool punct_symb(char c);
 
 void Qsort(Data *data, bool cmpend) {
     
@@ -47,11 +46,11 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
 
     if (!cmpend) {
         while (*s1 && *s2 && *s1 != '\n' && *s2 != '\n' && count++ < limit) {
-            if (punct_symb(*s1)) {
+            if (!isalpha(*s1)) {
                 s1++;
             }
 
-            if (punct_symb(*s2)) {
+            if (!isalpha(*s2)) {
                 s2++;
             }
 
@@ -81,12 +80,12 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
         }
 
         while (count1-- && count2--) {
-            if (punct_symb(*s1)) {
+            if (!isalpha(*s1)) {
                 s1--;
                 count1--;
             }
 
-            if (punct_symb(*s2)) {
+            if (!isalpha(*s2)) {
                 s2--;
                 count2--;
             }
@@ -125,9 +124,4 @@ void swap(char **a, char **b) {
     char *tmp = *a;
     *a = *b;
     *b = tmp;
-}
-
-static bool punct_symb(char c) {
-    return (c == '`') || (c == ',') || (c == '\"') || (c == ';') ||
-           (c == '.') || (c == '-') || (c == '\'');
 }

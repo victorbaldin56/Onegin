@@ -1,5 +1,7 @@
 # Onegin
 A string sorter written on C, can sort strings by the beginning or by the end.
+The main purpose of this project is to turn Onegin to the "encyclopedia of
+Russian life" by sorting it by alphabet, skipping punctuation symbols.
 
 ## Build
 ```
