@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
             return 0;
         }
         
+        remove("output.txt");
         FILE *ostream = fopen("output.txt", "a");
         char *buf = readtext(argv[1]);
 
