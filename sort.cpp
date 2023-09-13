@@ -7,6 +7,16 @@ void Qsort(Data *data, bool cmpend) {
     
 }
 
+void BubbleSort(char **text, bool cmpend) {
+    for (size_t i = 0; *(text + i); i++) {
+        for (size_t j = 0; *(text + j); j++) {
+            if (my_strncmp(*(text + i), *(text + j), MAXLEN, cmpend) > 0) {
+                swap(text + i, text + j);
+            }
+        }
+    }
+}
+
 void StringSort(char **text, bool cmpend) {
     assert(text);
 

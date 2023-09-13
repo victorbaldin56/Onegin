@@ -31,6 +31,11 @@ void StringSort(char **text, bool cmpend);
 /**
  * 
 */
+void BubbleSort(char **text, bool cmpend);
+
+/**
+ * 
+*/
 void Qsort(Data *data, bool cmpend);
 
 /**
