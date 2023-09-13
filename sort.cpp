@@ -10,7 +10,14 @@ void Qsort(Data *data, bool cmpend) {
 void BubbleSort(char **text, bool cmpend) {
     for (size_t i = 0; *(text + i); i++) {
         for (size_t j = 0; *(text + j); j++) {
-            if (my_strncmp(*(text + i), *(text + j), MAXLEN, cmpend) > 0) {
+            int diff = my_strncmp(*(text + i), *(text + j), MAXLEN, cmpend);
+            #ifndef NDEBUG
+            printf("diff = %d\n", diff);
+            my_fputs(*(text + i), stdout);
+            my_fputs(*(text + j), stdout);
+            #endif
+
+            if (diff > 0) {
                 swap(text + i, text + j);
             }
         }
@@ -36,9 +43,11 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
 
     if (!cmpend) {
         while (*s1 && *s2 && *s1 != '\n' && *s2 != '\n' && count++ < limit) {
-            if (*s1++ != *s2++) {
+            if (*s1 != *s2) {
                 return *s1 - *s2;
             }
+            s1++;
+            s2++;
         }
     }
 
@@ -49,9 +58,11 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
         }
 
         while (*s1 && *s2 && count-- > 0) {
-            if (*s1-- != *s2--) {
+            if (*s1 != *s2) {
                 return *s1 - *s2;
             }
+            s1--;
+            s2--;
         }    
     }
 

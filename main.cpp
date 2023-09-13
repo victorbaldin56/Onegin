@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
         printf("main: call parsebuf\n");
 
         char **text = parsebuf(buf);
-
+        
         BubbleSort(text, START);
         #ifndef NDEBUG
         printf("success sort\n");
