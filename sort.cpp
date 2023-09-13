@@ -28,8 +28,10 @@ void StringSort(char **text, bool cmpend) {
     assert(text);
 
     while (*(text + 1)) {
-        if (my_strncmp(*text, *findmin(text + 1, cmpend), MAXLEN, cmpend) > 0) {
-            swap(text, findmin(text + 1, cmpend));
+        char **min = findmin(text + 1, cmpend);
+
+        if (my_strncmp(*text, *min, MAXLEN, cmpend) > 0) {
+            swap(text, min);
         }
         
         text++;
@@ -52,12 +54,20 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
     }
 
     else {
-        while (*s1 && *s2 && *s1 != '\n' && *s2 != '\n' && count++ < limit) {
+        size_t count1 = 0;
+        size_t count2 = 0;
+
+        while (*s1 && *s1 != '\n' && count1++ < limit) {
             s1++;
+        }
+
+        while (*s2 && *s2 != '\n' && count2++ < limit) {
             s2++;
         }
 
-        while (*s1 && *s2 && count-- > 0) {
+        count = MIN(count1, count2);
+
+        while (count-- > 0) {
             if (*s1 != *s2) {
                 return *s1 - *s2;
             }

@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+#define MIN(x, y) (x < y? x : y)
+
 const bool START = 0; // sort starting by the beginning of strings
 const bool END   = 1; // sort starting by the end of strings
 
