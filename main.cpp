@@ -31,14 +31,14 @@ int main(int argc, char **argv) {
         printf("main: call parsebuf\n");
 
         char **text = parsebuf(buf);
-        
-        BubbleSort(text, START);
+
+        StringSort(text, START);
         #ifndef NDEBUG
         printf("success sort\n");
         #endif
         print_text(text, ostream);
 
-        BubbleSort(text, END);
+        StringSort(text, END);
         print_text(text, ostream);
 
         fputs(buf, ostream);
