@@ -61,7 +61,6 @@ void Qsort(void *data, size_t size, size_t elemsize,
 
         while (right > (char *)data && (*CompareFunc)(right, pivot, arg) > 0) {
             assert(right);
-            printf("bad element found: %p", right);
             right -= elemsize;
         }
 
@@ -69,7 +68,9 @@ void Qsort(void *data, size_t size, size_t elemsize,
 
         //printf("stop right\n");
 
+        //printf("left = %c, right = %c\n", *left, *right);
         Swap(left, right, elemsize);
+        //printf("left = %c, right = %c\n", *left, *right);
     }
 
     printf("success partitioner\n");
@@ -201,13 +202,13 @@ int CmpStrStart(const void *a, const void *b, void *arg) {
     size_t count = 0;
 
     while (*s1 && *s2 && *s1 != '\n' && *s2 != '\n' && count++ < limit) {
-        if (!isalpha(*s1) && *s1 && *s1 != '\n') {
+        while (!isalpha(*s1) && *s1 && *s1 != '\n') {
             s1++;
         }
 
         assert(count < limit);
 
-        if (!isalpha(*s2) && *s2 && *s2 != '\n') {
+        while (!isalpha(*s2) && *s2 && *s2 != '\n') {
             s2++;
         }
 
@@ -244,12 +245,12 @@ int CmpStrEnd(const void *a, const void *b, void *arg) {
     }
 
     while (count1 && count2) {
-        if (!isalpha(*s1)) {
+        while (!isalpha(*s1)) {
             s1--;
             count1--;
         }
 
-        if (!isalpha(*s2)) {
+        while (!isalpha(*s2)) {
             s2--;
             count2--;
         }

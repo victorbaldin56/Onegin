@@ -20,7 +20,7 @@ char *readtext(char *name) {
     }
 
     read(fd, buf, nbytes);
-    printf("%s\n", buf);
+    //printf("%s\n", buf);
     return buf;
 }
 
@@ -42,7 +42,7 @@ char **parsebuf(char *buf, size_t *size) {
     while (*buf) {
         if (*buf == '\n') {
             #ifndef NDEBUG
-            printf("\\n found on the address %p\n", buf);     
+       //     printf("\\n found on the address %p\n", buf);     
             #endif
             if (*(buf + 1)) {
                 *txtptr++ = buf + 1;

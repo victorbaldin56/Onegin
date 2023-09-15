@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
         }
 
         #ifndef NDEBUG
-        printf("main: call parsebuf\n");
+        //printf("main: call parsebuf\n");
         #endif
 
         size_t size = 0;
@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
         qsort_r(text, size, sizeof(char *),
                 CmpStrStart, &limit);
         #ifndef NDEBUG
-        printf("success sort\n");
+        //printf("success sort\n");
         #endif
         print_text(text, ostream);
 
