@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "textlib.h"
+#include "text_process.h"
 #include "sort.h"
 
 int main(int argc, char **argv) {
@@ -20,41 +21,7 @@ int main(int argc, char **argv) {
             return 0;
         }
         
-        remove("output.txt");
-        FILE *ostream = fopen("output.txt", "a");
-        char *buf = readtext(argv[1]);
-
-        if (!buf) {
-            return -1;
-        }
-
-        #ifndef NDEBUG
-        //printf("main: call parsebuf\n");
-        #endif
-
-        size_t size = 0;
-        char **text = parsebuf(buf, &size); 
-
-        size_t limit = MAXLEN;
-        /*StringSort(text, START)*/;
-        qsort_r(text, size, sizeof(char *),
-                CmpStrStart, &limit);
-        #ifndef NDEBUG
-        //printf("success sort\n");
-        #endif
-        print_text(text, ostream);
-
-        /*StringSort(text, END)*/;
-        qsort_r(text, size, sizeof(char *),
-                CmpStrEnd, &limit);
-        print_text(text, ostream);
-
-        fputs(buf, ostream);
-
-        free(buf);
-        free(text);
-
-        fclose(ostream);
+        tProcess(argc, argv);
         
         return 0;
     }

@@ -245,12 +245,12 @@ int CmpStrEnd(const void *a, const void *b, void *arg) {
     }
 
     while (count1 && count2) {
-        while (!isalpha(*s1)) {
+        while (count1 && !isalpha(*s1)) {
             s1--;
             count1--;
         }
 
-        while (!isalpha(*s2)) {
+        while (count2 && !isalpha(*s2)) {
             s2--;
             count2--;
         }
