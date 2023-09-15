@@ -28,7 +28,7 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend);
 /**
  * 
 */
-void StringSort(char **text, bool cmpend);
+void SelectSort(char **text, bool cmpend);
 
 /**
  * 

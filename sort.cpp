@@ -16,8 +16,8 @@ void Qsort(void *data, size_t size, size_t elemsize,
     
     char *end = right;
 
-    assert(*left);
-    assert(*right);
+    //assert(*left);
+    //assert(*right);
 
     if (size == 1) {
         return;
@@ -45,13 +45,13 @@ void Qsort(void *data, size_t size, size_t elemsize,
     printf("starting partitioner\n");
 
     while (left < right) {
-        assert(*left);
-        assert(arg);
-        assert(*right);
+//      assert(*left);
+//      assert(arg);
+//      assert(*right);
         
         while (left < end && (*CompareFunc)(left, pivot, arg) < 0) {
             assert(left);
-            printf("bad element found: %p", left);
+            //printf("bad element found: %p", left);
             left += elemsize;
         }
 
@@ -71,6 +71,8 @@ void Qsort(void *data, size_t size, size_t elemsize,
         //printf("left = %c, right = %c\n", *left, *right);
         Swap(left, right, elemsize);
         //printf("left = %c, right = %c\n", *left, *right);
+        left += elemsize;
+        right -+ elemsize;
     }
 
     printf("success partitioner\n");
@@ -102,7 +104,7 @@ void BubbleSort(char **text, bool cmpend) {
     }
 }
 
-void StringSort(char **text, bool cmpend) {
+void SelectSort(char **text, bool cmpend) {
     assert(text);
 
     while (*(text + 1)) {
@@ -191,10 +193,8 @@ int CmpStrStart(const void *a, const void *b, void *arg) {
     const char *s1 = *((const char **)a);
     const char *s2 = *((const char **)b);
 
-    if (!s1 || !s2) {
-        printf("found NULL!!!!\n");
-        exit(1);
-    } 
+    assert(s1);
+    assert(s2);
 
     size_t limit = *((const size_t *)arg);
     //assert(LenStr(s1) < limit);

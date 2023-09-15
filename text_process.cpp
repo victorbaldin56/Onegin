@@ -22,7 +22,7 @@ void tProcess(int argc, char **argv) {
 
         size_t limit = MAXLEN;
         /*StringSort(text, START)*/;
-        qsort_r(text, size, sizeof(char *),
+        qsort_r(text, size - 1, sizeof(char *),
                 CmpStrStart, &limit);
         #ifndef NDEBUG
         //printf("success sort\n");
@@ -30,7 +30,7 @@ void tProcess(int argc, char **argv) {
         print_text(text, ostream);
 
         /*StringSort(text, END)*/;
-        qsort_r(text, size, sizeof(char *),
+        qsort_r(text, size - 1, sizeof(char *),
                 CmpStrEnd, &limit);
         print_text(text, ostream);
 

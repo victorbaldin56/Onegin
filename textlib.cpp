@@ -15,7 +15,7 @@ char *readtext(char *name) {
     int fd = open(name, O_RDONLY, 0);
     
     if (fd == -1) {
-        perror("");
+        perror("readtext:");
         return NULL; 
     }
 
