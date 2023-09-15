@@ -30,7 +30,7 @@ char **parsebuf(char *buf, size_t *size) {
 
     for (char *ptr = buf; *ptr; ptr++) {
         //putchar(*ptr);
-        if (*ptr == '\n') {
+        if (*ptr == '\n' && *(ptr + 1) != '\n') {
             (*size)++;
         }
     }
@@ -44,7 +44,7 @@ char **parsebuf(char *buf, size_t *size) {
             #ifndef NDEBUG
        //     printf("\\n found on the address %p\n", buf);     
             #endif
-            if (*(buf + 1)) {
+            if (*(buf + 1) && *(buf + 1) != '\n') {
                 *txtptr++ = buf + 1;
             }
         }
