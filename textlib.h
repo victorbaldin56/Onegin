@@ -22,12 +22,17 @@ char *readtext(char *name);
 /**
  * 
 */
-char **parsebuf(char *buf);
+char **parsebuf(char *buf, size_t *size);
 
 /**
  * 
 */
 int my_fputs(const char *s, FILE *stream);
+
+/**
+ * 
+*/
+size_t LenStr(const char *s);
 
 /**
  * 

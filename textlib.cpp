@@ -24,18 +24,18 @@ char *readtext(char *name) {
     return buf;
 }
 
-char **parsebuf(char *buf) {
+char **parsebuf(char *buf, size_t *size) {
     assert(buf);
-    size_t count = 1;
+    *size = 0;
 
     for (char *ptr = buf; *ptr; ptr++) {
         //putchar(*ptr);
         if (*ptr == '\n') {
-            count++;
+            (*size)++;
         }
     }
 
-    char **text = (char **)calloc(count + 1, sizeof(char *));
+    char **text = (char **)calloc(*size + 2, sizeof(char *));
     assert(text);
     char **txtptr = text;
 

@@ -8,17 +8,17 @@
 const bool START = 0; // sort starting by the beginning of strings
 const bool END   = 1; // sort starting by the end of strings
 
-typedef int CompareFunc_t(const void *a, const void *b, const bool cmpend);
+typedef int CompareFunc_t(const void *a, const void *b, void *arg);
 
 /**
  * 
 */
-typedef struct {
-    void *arr;
-    size_t size;
-    size_t elemsize;
-    CompareFunc_t *CompareFunc;
-} Data;
+int CmpStrStart(const void *s1, const void *s2, void *limit);
+
+/**
+ * 
+*/
+int CmpStrEnd(const void *s1, const void *s2, void *limit); 
 
 /**
  * 
@@ -38,7 +38,8 @@ void BubbleSort(char **text, bool cmpend);
 /**
  * 
 */
-void Qsort(Data *data, bool cmpend);
+void Qsort(void *data, size_t size, size_t elemsize, 
+           CompareFunc_t *CompareFunc, void *arg);
 
 /**
  * 
@@ -48,6 +49,8 @@ char **findmin(char **text, bool cmpend);
 /**
  * 
 */
-void swap(char **a, char **b);
+void strswap(char **a, char **b);
+
+void Swap(void *a, void *b, size_t elemsize);
 
 #endif // SORT

@@ -28,23 +28,33 @@ int main(int argc, char **argv) {
             return -1;
         }
 
+        #ifndef NDEBUG
         printf("main: call parsebuf\n");
+        #endif
 
-        char **text = parsebuf(buf);
+        size_t size = 0;
+        char **text = parsebuf(buf, &size); 
 
-        StringSort(text, START);
+        size_t limit = MAXLEN;
+        /*StringSort(text, START)*/;
+        qsort_r(text, size, sizeof(char *),
+                CmpStrStart, &limit);
         #ifndef NDEBUG
         printf("success sort\n");
         #endif
         print_text(text, ostream);
 
-        StringSort(text, END);
+        /*StringSort(text, END)*/;
+        qsort_r(text, size, sizeof(char *),
+                CmpStrEnd, &limit);
         print_text(text, ostream);
 
         fputs(buf, ostream);
 
         free(buf);
         free(text);
+
+        fclose(ostream);
         
         return 0;
     }
