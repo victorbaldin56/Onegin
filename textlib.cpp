@@ -25,7 +25,7 @@ char *readtext(char *name) {
     return buf;
 }
 
-char **parsebuf(char *buf, size_t *size) {
+Line *parsebuf(char *buf, size_t *size) {
     assert(buf);
     *size = 0;
 
@@ -36,21 +36,17 @@ char **parsebuf(char *buf, size_t *size) {
         }
     }
 
-    char **text = (char **)calloc(*size + 2, sizeof(char *));
+    Line *text = (Line *)calloc(*size + 2, sizeof(Line));
     assert(text);
-    char **txtptr = text;
+    size_t i = 0;
 
     while (*buf) {
-        if (*buf == '\n') {
-            #ifndef NDEBUG
-       //     printf("\\n found on the address %p\n", buf);     
-            #endif
-            if (*(buf + 1) && *(buf + 1) != '\n') {
-                *txtptr++ = buf + 1;
-            }
-        }
-
+        (text + i)->len++;
         buf++;
+        if (*buf == '\n' && *(buf + 1) && *(buf + 1) != '\n') {
+            (text + i)->str = buf + 1;
+            i++;
+        }
     }
 
     return text;
@@ -67,9 +63,9 @@ off_t fsize(char *name) {
     return stbuf.st_size;
 }
 
-void print_text(char **text, FILE *stream) {
-    while (*text) {
-        my_fputs(*text, stream);
+void print_text(const Line *text, FILE *stream) {
+    while (text->str) {
+        my_fputs(text->str, stream);
         text++;
     }
     

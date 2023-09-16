@@ -15,20 +15,19 @@ void tProcess(int argc, char **argv) {
     }
 
     size_t size = 0;
-    char **text = parsebuf(buf, &size); 
+    Line *text = parsebuf(buf, &size); 
 
-    size_t limit = MAXLEN;
     /*StringSort(text, START)*/;
-    Qsort(text, size - 1, sizeof(char *),
-            CmpStrStart, &limit);
+    Qsort(text, size - 1, sizeof(Line),
+            CmpStrStart);
 
     ON_DEBUG(printf("success sort\n"));
     
     print_text(text, ostream);
 
     /*StringSort(text, END)*/;
-    Qsort(text, size - 1, sizeof(char *),
-            CmpStrEnd, &limit);
+    Qsort(text, size - 1, sizeof(Line),
+            CmpStrEnd);
     print_text(text, ostream);
 
     fputs(buf, ostream);

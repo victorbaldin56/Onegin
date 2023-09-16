@@ -8,8 +8,7 @@
 #include "textlib.h"
 
 void Qsort(void *data, size_t size, size_t elemsize,
-           CompareFunc_t *CompareFunc, void *arg) {
-    assert(arg);
+           CompareFunc_t *CompareFunc) {
     assert(data);
     assert(CompareFunc);
     size_t left  = 0;        // left pointer
@@ -20,7 +19,7 @@ void Qsort(void *data, size_t size, size_t elemsize,
     }
 
     if (size == 2) {
-        if ((*CompareFunc)(data, data + right * elemsize, arg) > 0) {
+        if ((*CompareFunc)(data, data + right * elemsize) > 0) {
             Swap(data, left, right, elemsize);
         }
 
@@ -37,7 +36,7 @@ void Qsort(void *data, size_t size, size_t elemsize,
               "SIZE = %zu\n", size));
 
     while (left < right) {
-        while (left < size - 1 && (*CompareFunc)(data + left * elemsize, pivot, arg) < 0) {
+        while (left < size - 1 && (*CompareFunc)(data + left * elemsize, pivot) < 0) {
             //printf("bad element found: %p", left);
             ON_DEBUG(("left = %zu\n", left));
             left++;
@@ -47,7 +46,7 @@ void Qsort(void *data, size_t size, size_t elemsize,
 
         //printf("stop left\n");
 
-        while (right > 1 && (*CompareFunc)(data + right * elemsize, pivot, arg) > 0) {
+        while (right > 1 && (*CompareFunc)(data + right * elemsize, pivot) > 0) {
             ON_DEBUG(("right = %zu\n", right));
             right--;
         }
@@ -69,10 +68,10 @@ void Qsort(void *data, size_t size, size_t elemsize,
     ON_DEBUG(("success partitioner\n"));
 
     Qsort(data, right, elemsize,
-          CompareFunc, arg);
+          CompareFunc);
 
     Qsort(data + right * elemsize, size - left, elemsize,
-          CompareFunc, arg);
+          CompareFunc);
 
     free(pivot);
     pivot = NULL;
@@ -178,86 +177,60 @@ int my_strncmp(const char *s1, const char *s2, size_t limit, bool cmpend) {
     return 0;
 }
 
-int CmpStrStart(const void *a, const void *b, void *arg) {
+int CmpStrStart(const void *a, const void *b) {
     assert(a);
     assert(b);
-    const char *s1 = *((const char **)a);
-    const char *s2 = *((const char **)b);
+    Line s1 = *(const Line *)a;
+    Line s2 = *(const Line *)b;
 
-    assert(s1);
-    assert(s2);
+    assert(s1.str);
+    assert(s2.str);
 
-    size_t limit = *((const size_t *)arg);
-    //assert(LenStr(s1) < limit);
-    //assert(LenStr(s2) < limit);
-    size_t count = 0;
-
-    while (*s1 && *s2 && *s1 != '\n' && *s2 != '\n' && count++ < limit) {
-        while (!isalpha(*s1) && *s1 && *s1 != '\n') {
-            s1++;
+    while (*s1.str && *s2.str && *s1.str != '\n' && *s2.str!= '\n') {
+        while (!isalpha(*s1.str) && *s1.str && *s1.str != '\n') {
+            s1.str++;
         }
 
-        assert(count < limit);
-
-        while (!isalpha(*s2) && *s2 && *s2 != '\n') {
-            s2++;
+        while (!isalpha(*s2.str) && *s2.str && *s2.str != '\n') {
+            s2.str++;
         }
-
-        assert(count < limit);
         
-        if (*s1 != *s2) {
-            return *s1 - *s2;
+        if (*s1.str != *s2.str) {
+            return *s1.str - *s2.str;
         }
 
-        s1++;
-        s2++;
+        s1.str++;
+        s2.str++;
     }
-
-    assert(count < limit);
 
     return 0;
 }
 
-int CmpStrEnd(const void *a, const void *b, void *arg) {
+int CmpStrEnd(const void *a, const void *b) {
     assert(a);
     assert(b);
-    const char *s1 = *((const char **)a);
-    const char *s2 = *((const char **)b);
-    const size_t limit = *((const size_t *)arg);
-    size_t count1 = 0;
-    size_t count2 = 0; // Srazy s nazaada
+    Line s1 = *(const Line *)a;
+    Line s2 = *(const Line *)b;
+    
+    const char *start1 = s1.str, *start2 = s2.str;
+    s1.str += s1.len - 1;
+    s2.str += s2.len - 1;
 
-    while (*s1 && *s1 != '\n' && count1++ < limit) {
-        s1++;
-    }
-
-    while (*s2 && *s2 != '\n' && count2++ < limit) {
-        s2++;
-    }
-
-    while (count1 && count2) {
-        while (count1 && !isalpha(*s1)) {
-            s1--;
-            count1--;
+    while (s1.str > start1 && s2.str > start2) {
+        while (s1.str > start1 && !isalpha(*s1.str)) {
+            s1.str--;
         }
 
-        while (count2 && !isalpha(*s2)) {
-            s2--;
-            count2--;
-        }
-
-        if (!count1 || !count2) {
-            return 0;
+        while (s2.str > start2 && !isalpha(*s2.str)) {
+            s2.str--;
         }
         
-        if (*s1 != *s2) {
-            return *s1 - *s2;
+        if (*s1.str != *s2.str) {
+            return *s1.str - *s2.str;
         }
 
-        count1--;
-        count2--;
-        s1--;
-        s2--;
+        s1.str--;
+        s2.str--;
     }
 
     return 0;    

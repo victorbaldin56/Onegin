@@ -12,6 +12,14 @@ const size_t MAXLEN = 100000; // max str len
 /**
  * 
 */
+typedef struct {
+    const char *str;
+    size_t len;
+} Line;
+
+/**
+ * 
+*/
 off_t fsize(char *name);
 
 /**
@@ -22,7 +30,7 @@ char *readtext(char *name);
 /**
  * 
 */
-char **parsebuf(char *buf, size_t *size);
+Line *parsebuf(char *buf, size_t *size);
 
 /**
  * 
@@ -37,6 +45,6 @@ size_t LenStr(const char *s);
 /**
  * 
 */
-void print_text(char **text, FILE *stream); 
+void print_text(const Line *text, FILE *stream); 
 
 #endif // TEXTLIB
