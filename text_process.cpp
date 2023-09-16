@@ -28,7 +28,7 @@ void tProcess(int argc, char **argv) {
     fprintf(ostream, "\n=============SUFFIX SORT=============\n");
 
     /*StringSort(text, END)*/;
-    Qsort(text, size - 1, sizeof(Line),
+    qsort(text, size - 1, sizeof(Line),
             CmpStrEnd);
     print_text(text, ostream);
 

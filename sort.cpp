@@ -187,12 +187,14 @@ int CmpStrStart(const void *a, const void *b) {
     assert(s2.str);
 
     while (*s1.str && *s2.str && *s1.str != '\n' && *s2.str!= '\n') {
-        while (!isalpha(*s1.str) && *s1.str && *s1.str != '\n') {
+        if (!isalpha(*s1.str) && *s1.str && *s1.str != '\n') {
             s1.str++;
+            continue;
         }
 
-        while (!isalpha(*s2.str) && *s2.str && *s2.str != '\n') {
+        if (!isalpha(*s2.str) && *s2.str && *s2.str != '\n') {
             s2.str++;
+            continue;
         }
         
         if (*s1.str != *s2.str) {
@@ -216,13 +218,15 @@ int CmpStrEnd(const void *a, const void *b) {
     s1.str += s1.len - 1;
     s2.str += s2.len - 1;
 
-    while (s1.str > start1 && s2.str > start2) {
-        while (s1.str > start1 && !isalpha(*s1.str)) {
+    while (s1.str >= start1 && s2.str >= start2) {
+        if (s1.str >= start1 && !isalpha(*s1.str)) {
             s1.str--;
+            continue;
         }
 
-        while (s2.str > start2 && !isalpha(*s2.str)) {
+        if (s2.str >= start2 && !isalpha(*s2.str)) {
             s2.str--;
+            continue;
         }
         
         if (*s1.str != *s2.str) {
