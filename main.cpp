@@ -22,7 +22,13 @@ int main(int argc, char **argv) {
             return 0;
         }
         
+        clock_t start = clock();
+        
         tProcess(argc, argv);
+        
+        clock_t diff = clock() - start;
+        long long msec = diff * 1000 / CLOCKS_PER_SEC;
+        printf("Proceeding time %lld ms\n", msec);
         
         return 0;
     }

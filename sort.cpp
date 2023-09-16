@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include "text_process.h"
 #include <ctype.h>
 #include "sort.h"
 #include "textlib.h"
@@ -32,26 +33,26 @@ void Qsort(void *data, size_t size, size_t elemsize,
 
     memcpy(pivot, mid, elemsize); // copy pivot element
 
-    printf("starting partitioner\n"
-           "SIZE = %zu\n", size);
+    ON_DEBUG(("starting partitioner\n"
+              "SIZE = %zu\n", size));
 
     while (left < right) {
         while (left < size - 1 && (*CompareFunc)(data + left * elemsize, pivot, arg) < 0) {
             //printf("bad element found: %p", left);
-            printf("left = %zu\n", left);
+            ON_DEBUG(("left = %zu\n", left));
             left++;
         }
 
-        printf("bad element: left = %zu\n", left);
+        ON_DEBUG(("bad element: left = %zu\n", left));
 
         //printf("stop left\n");
 
         while (right > 1 && (*CompareFunc)(data + right * elemsize, pivot, arg) > 0) {
-            printf("right = %zu\n", right);
+            ON_DEBUG(("right = %zu\n", right));
             right--;
         }
 
-        printf("bad element: right = %zu\n", right);
+        ON_DEBUG(("bad element: right = %zu\n", right));
 
         //printf("stop right\n");
 
@@ -65,7 +66,7 @@ void Qsort(void *data, size_t size, size_t elemsize,
         right--;
     }
 
-    printf("success partitioner\n");
+    ON_DEBUG(("success partitioner\n"));
 
     Qsort(data, right, elemsize,
           CompareFunc, arg);

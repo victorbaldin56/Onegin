@@ -2,13 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "textlib.h"
+#include "text_process.h"
 #include "sort.h"
-
-#ifndef NDEBUG
-#define ON_DEBUG(x) x
-#else
-#define ON_DEBUG(x)
-#endif
 
 void tProcess(int argc, char **argv) {
     FILE *ostream = fopen("output.txt", "w");

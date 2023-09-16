@@ -1,6 +1,14 @@
 #ifndef TEXTPROCESS
 #define TEXTPROCESS
 
-int tProcess(int argc, char **argv);
+#define NDEBUG
 
+#ifndef NDEBUG
+#define ON_DEBUG(x) x
+#else
+#define ON_DEBUG(x)
 #endif
+
+void tProcess(int argc, char **argv);
+
+#endif 
