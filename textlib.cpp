@@ -68,8 +68,6 @@ void print_text(const Line *text, FILE *stream) {
         my_fputs(text->str, stream);
         text++;
     }
-    
-    fprintf(stream, "\n====================================\n");
 }
 
 int my_fputs(const char *s, FILE *stream) {

@@ -17,6 +17,7 @@ void tProcess(int argc, char **argv) {
     size_t size = 0;
     Line *text = parsebuf(buf, &size); 
 
+    fprintf(ostream, "=============PREFIX SORT=============\n");
     /*StringSort(text, START)*/;
     Qsort(text, size - 1, sizeof(Line),
             CmpStrStart);
@@ -24,12 +25,14 @@ void tProcess(int argc, char **argv) {
     ON_DEBUG(printf("success sort\n"));
     
     print_text(text, ostream);
+    fprintf(ostream, "\n=============SUFFIX SORT=============\n");
 
     /*StringSort(text, END)*/;
     Qsort(text, size - 1, sizeof(Line),
             CmpStrEnd);
     print_text(text, ostream);
 
+    fprintf(ostream, "\n=============ORIGINAL TEXT=============\n");
     fputs(buf, ostream);
 
     free(buf);
