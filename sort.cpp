@@ -11,27 +11,19 @@ void Qsort(void *data, size_t size, size_t elemsize,
     assert(arg);
     assert(data);
     assert(CompareFunc);
-    char *left  = (char *)data;                         // left pointer
-    char *right = (char *)data + (size - 1) * elemsize; // right pointer
-    
-    char *end = right;
+    size_t left  = 0;        // left pointer
+    size_t right = size - 1; // right pointer
 
-    //assert(*left);
-    //assert(*right);
-
-    if (size == 1) {
+    if (!size || size == 1) {
         return;
     }
 
     if (size == 2) {
-        assert(end);
-        assert(data);
-        assert(arg);
-
-        if ((*CompareFunc)(data, end, arg) > 0) {
-            Swap(data, end, elemsize);
-            return;
+        if ((*CompareFunc)(data, data + right * elemsize, arg) > 0) {
+            Swap(data, left, right, elemsize);
         }
+
+        return;
     }
 
     void *pivot = calloc(1, elemsize);
@@ -39,48 +31,46 @@ void Qsort(void *data, size_t size, size_t elemsize,
     char *mid = (char *)data + (size / 2) * elemsize;
 
     memcpy(pivot, mid, elemsize); // copy pivot element
-    
-    assert(end);
 
-    printf("starting partitioner\n");
+    printf("starting partitioner\n"
+           "SIZE = %zu\n", size);
 
     while (left < right) {
-//      assert(*left);
-//      assert(arg);
-//      assert(*right);
-        
-        while (left < end && (*CompareFunc)(left, pivot, arg) < 0) {
-            assert(left);
+        while (left < size - 1 && (*CompareFunc)(data + left * elemsize, pivot, arg) < 0) {
             //printf("bad element found: %p", left);
-            left += elemsize;
+            printf("left = %zu\n", left);
+            left++;
         }
 
-        printf("left = %p\n", left);
+        printf("bad element: left = %zu\n", left);
 
         //printf("stop left\n");
 
-        while (right > (char *)data && (*CompareFunc)(right, pivot, arg) > 0) {
-            assert(right);
-            right -= elemsize;
+        while (right > 1 && (*CompareFunc)(data + right * elemsize, pivot, arg) > 0) {
+            printf("right = %zu\n", right);
+            right--;
         }
 
-        printf("right = %p\n", right);
+        printf("bad element: right = %zu\n", right);
 
         //printf("stop right\n");
 
         //printf("left = %c, right = %c\n", *left, *right);
-        Swap(left, right, elemsize);
+        Swap(data, left, right, elemsize);
         //printf("left = %c, right = %c\n", *left, *right);
-        left += elemsize;
-        right -+ elemsize;
+        
+        assert(right > 0);
+        assert(left < size);
+        left++;
+        right--;
     }
 
     printf("success partitioner\n");
 
-    Qsort(left, (left - (char *)data) / elemsize, elemsize,
+    Qsort(data, right, elemsize,
           CompareFunc, arg);
 
-    Qsort(right, (end - right) / elemsize, elemsize,
+    Qsort(data + right * elemsize, size - left, elemsize,
           CompareFunc, arg);
 
     free(pivot);
@@ -234,7 +224,7 @@ int CmpStrEnd(const void *a, const void *b, void *arg) {
     const char *s2 = *((const char **)b);
     const size_t limit = *((const size_t *)arg);
     size_t count1 = 0;
-    size_t count2 = 0;
+    size_t count2 = 0; // Srazy s nazaada
 
     while (*s1 && *s1 != '\n' && count1++ < limit) {
         s1++;
@@ -302,12 +292,12 @@ void strswap(char **a, char **b) {
     *b = tmp;
 }
 
-void Swap(void *a, void *b, size_t elemsize) {
-    void *tmp = calloc(1, elemsize);
-    assert(tmp);
-    memcpy(tmp, a, elemsize);
-    memcpy(a, b, elemsize);
-    memcpy(b, tmp, elemsize);
-    free(tmp);
-    tmp = NULL;
+void Swap(void *data, size_t i, size_t j, size_t elemsize) {
+    assert(data);
+
+    for (size_t count = 0; count < elemsize; count++) {
+        char tmp = *(char *)(data + i * elemsize + count);
+        *(char *)(data + i * elemsize + count) = *(char *)(data + j * elemsize + count);
+        *(char *)(data + j * elemsize + count) = tmp;
+    }
 }

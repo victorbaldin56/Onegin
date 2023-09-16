@@ -4,40 +4,42 @@
 #include "textlib.h"
 #include "sort.h"
 
+#ifndef NDEBUG
+#define ON_DEBUG(x) x
+#else
+#define ON_DEBUG(x)
+#endif
+
 void tProcess(int argc, char **argv) {
-    remove("output.txt");
-        FILE *ostream = fopen("output.txt", "a");
-        char *buf = readtext(argv[1]);
+    FILE *ostream = fopen("output.txt", "w");
+    char *buf = readtext(argv[1]);
 
-        if (!buf) {
-            exit(1);
-        }
+    if (!buf) {
+        fprintf(stderr, "failed to allocate buffer\n");
+        exit(1);
+    }
 
-        #ifndef NDEBUG
-        //printf("main: call parsebuf\n");
-        #endif
+    size_t size = 0;
+    char **text = parsebuf(buf, &size); 
 
-        size_t size = 0;
-        char **text = parsebuf(buf, &size); 
+    size_t limit = MAXLEN;
+    /*StringSort(text, START)*/;
+    Qsort(text, size - 1, sizeof(char *),
+            CmpStrStart, &limit);
 
-        size_t limit = MAXLEN;
-        /*StringSort(text, START)*/;
-        qsort_r(text, size - 1, sizeof(char *),
-                CmpStrStart, &limit);
-        #ifndef NDEBUG
-        //printf("success sort\n");
-        #endif
-        print_text(text, ostream);
+    ON_DEBUG(printf("success sort\n"));
+    
+    print_text(text, ostream);
 
-        /*StringSort(text, END)*/;
-        qsort_r(text, size - 1, sizeof(char *),
-                CmpStrEnd, &limit);
-        print_text(text, ostream);
+    /*StringSort(text, END)*/;
+    Qsort(text, size - 1, sizeof(char *),
+            CmpStrEnd, &limit);
+    print_text(text, ostream);
 
-        fputs(buf, ostream);
+    fputs(buf, ostream);
 
-        free(buf);
-        free(text);
+    free(buf);
+    free(text);
 
-        fclose(ostream);
+    fclose(ostream);
 }

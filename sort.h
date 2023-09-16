@@ -51,6 +51,6 @@ char **findmin(char **text, bool cmpend);
 */
 void strswap(char **a, char **b);
 
-void Swap(void *a, void *b, size_t elemsize);
+void Swap(void *data, size_t i, size_t j, size_t elemsize);
 
 #endif // SORT
