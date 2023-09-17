@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include <assert.h>
-#include "text_process.h"
 #include <ctype.h>
 #include "sort.h"
 #include "textlib.h"
@@ -13,8 +13,9 @@ void Qsort(void *data, size_t size, size_t elemsize,
     assert(CompareFunc);
     size_t left  = 0;        // left pointer
     size_t right = size - 1; // right pointer
+    assert(size < INT_MAX);
 
-    if (!size || size == 1) {
+    if (size <= 1) {
         return;
     }
 

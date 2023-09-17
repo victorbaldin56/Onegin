@@ -16,11 +16,11 @@ char *readtext(char *name) {
     int fd = open(name, O_RDONLY, 0);
     
     if (fd == -1) {
-        perror("readtext:");
+        perror("readtext");
         return NULL; 
     }
 
-    read(fd, buf, nbytes);
+    nbytes = read(fd, buf, nbytes);
     //printf("%s\n", buf);
     return buf;
 }

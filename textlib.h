@@ -7,6 +7,14 @@
 
 #define PERMS 0666
 
+#define NDEBUG
+
+#ifndef NDEBUG
+#define ON_DEBUG(x) x
+#else
+#define ON_DEBUG(x)
+#endif
+
 const size_t MAXLEN = 100000; // max str len
 
 /**
