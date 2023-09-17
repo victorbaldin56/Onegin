@@ -12,7 +12,7 @@ char *readtext(char *name) {
     assert(name);
     size_t nbytes = fsize(name);
     char *buf = (char *)calloc(nbytes + 1, sizeof(char));
-    // Ass
+    assert(buf);
     int fd = open(name, O_RDONLY, 0);
     
     if (fd == -1) {
