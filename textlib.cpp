@@ -29,6 +29,8 @@ Line *parsebuf(char *buf, size_t *size) {
     assert(buf);
     *size = 0;
 
+    char *orig_buf = buf;
+
     for (char *ptr = buf; *ptr; ptr++) {
         //putchar(*ptr);
         if (*ptr == '\n' && *(ptr + 1) != '\n') {
@@ -38,15 +40,30 @@ Line *parsebuf(char *buf, size_t *size) {
 
     Line *text = (Line *)calloc(*size + 2, sizeof(Line));
     assert(text);
-    size_t i = 0;
+
+    Line *textptr = text;
 
     while (*buf) {
-        (text + i)->len++;
-        buf++;
+        //textptr->len++;
+
         if (*buf == '\n' && *(buf + 1) && *(buf + 1) != '\n') {
-            (text + i)->str = buf + 1;
-            i++;
+            textptr->str = buf + 1;
+
+            /*if (textptr->str) {
+                my_fputs(textptr->str, stdout);
+            }*/
+
+            //printf("len = %zu\n", textptr->len);
+            textptr++;
         }
+
+        buf++;
+    }
+
+    text->len = text->str - orig_buf;
+
+    for (textptr = text + 1; textptr < text + *size; textptr++) {
+        textptr->len = textptr->str - (textptr-1)->str;
     }
 
     return text;
@@ -64,6 +81,8 @@ off_t fsize(char *name) {
 }
 
 void print_text(const Line *text, FILE *stream) {
+    assert(text);
+    
     while (text->str) {
         my_fputs(text->str, stream);
         text++;
@@ -71,6 +90,8 @@ void print_text(const Line *text, FILE *stream) {
 }
 
 int my_fputs(const char *s, FILE *stream) {
+    assert(s);
+    
     while (*s && *s != '\n') {
         fputc(*s, stream);
         s++;
