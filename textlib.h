@@ -7,7 +7,7 @@
 
 #define PERMS 0666
 
-#define NDEBUG
+//#define NDEBUG
 
 #ifndef NDEBUG
 #define ON_DEBUG(x) x
@@ -54,5 +54,10 @@ size_t LenStr(const char *s);
  * 
 */
 void print_text(const Line *text, FILE *stream); 
+
+/**
+ * 
+*/
+bool isLetterStr(const char *s);
 
 #endif // TEXTLIB

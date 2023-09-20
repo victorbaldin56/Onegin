@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <assert.h>
+#include <ctype.h>
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -34,7 +35,9 @@ Line *parsebuf(char *buf, size_t *size) {
     for (char *ptr = buf; *ptr; ptr++) {
         //putchar(*ptr);
         if (*ptr == '\n' && *(ptr + 1) != '\n') {
-            (*size)++;
+           // if (isLetterStr(ptr + 1)) {
+                (*size)++;
+           // }
         }
     }
 
@@ -47,9 +50,12 @@ Line *parsebuf(char *buf, size_t *size) {
         //textptr->len++;
 
         if (*buf == '\n' && *(buf + 1) && *(buf + 1) != '\n') {
-            textptr->str = buf + 1;
+//            if (isLetterStr(buf + 1)) {
+                textptr->str = buf + 1;
+//          }
+            //textptr->len = (textptr + 1)->str - (textptr)->str;
 
-            /*if (textptr->str) {
+            /*ifr(textptr->str) {
                 my_fputs(textptr->str, stdout);
             }*/
 
@@ -64,6 +70,8 @@ Line *parsebuf(char *buf, size_t *size) {
 
     for (textptr = text + 1; textptr < text + *size; textptr++) {
         textptr->len = textptr->str - (textptr-1)->str;
+        /*fprintf(stderr, "len = %d", textptr->len);
+        my_fputs(textptr->str, stderr);*/
     }
 
     return text;
@@ -98,5 +106,18 @@ int my_fputs(const char *s, FILE *stream) {
     }
 
     fputc('\n', stream);
+    return 0;
+}
+
+bool isLetterStr(const char *s) {
+    assert(s);
+
+    while (*s != '\n' && *s) {
+        if (isalpha(*s)) {
+            return 1;
+        }
+    }
+
+    ON_DEBUG((stderr, "isLetterStr success\n"));
     return 0;
 }
