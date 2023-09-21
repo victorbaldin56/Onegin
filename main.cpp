@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "textlib.h"
-#include "text_process.h"
 #include "sort.h"
+
+static int tProcess(char **argv);
 
 int main(int argc, char **argv) {
     if (argc == 1) {
@@ -24,7 +25,9 @@ int main(int argc, char **argv) {
         
         clock_t start = clock();
         
-        tProcess(argc, argv);
+        if (tProcess(argv)){
+            return -1;
+        }
         
         clock_t diff = clock() - start;
         long long msec = diff * 1000 / CLOCKS_PER_SEC;
@@ -32,4 +35,40 @@ int main(int argc, char **argv) {
         
         return 0;
     }
+}
+
+static int tProcess(char **argv) {
+    FILE *ostream = fopen("output.txt", "w");
+    char *buf = readtext(argv[1]);
+
+    if (!buf) {
+        fprintf(stderr, "failed to allocate buffer\n");
+        return -1;
+    }
+
+    size_t size = 0;
+    char **text = parsebuf(buf, &size); 
+
+    size_t limit = MAXLEN;
+    /*StringSort(text, START)*/;
+    Qsort(text, size - 1, sizeof(char *),
+            CmpStrStart, &limit);
+
+    ON_DEBUG(printf("success sort\n"));
+    
+    print_text(text, ostream);
+
+    /*StringSort(text, END)*/;
+    Qsort(text, size - 1, sizeof(char *),
+            CmpStrEnd, &limit);
+    print_text(text, ostream);
+
+    fputs(buf, ostream);
+
+    free(buf);
+    free(text);
+
+    fclose(ostream);
+
+    return 0;
 }

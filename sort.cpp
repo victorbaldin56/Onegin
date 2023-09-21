@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "text_process.h"
 #include <ctype.h>
 #include "sort.h"
 #include "textlib.h"
