@@ -1,6 +1,5 @@
 #ifndef TEXTLIB
 #define TEXTLIB
-//#define NDEBUG
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -53,7 +52,7 @@ size_t LenStr(const char *s);
 /**
  * 
 */
-void print_text(const Line *text, FILE *stream); 
+void print_text(const Line *text, size_t size, FILE *stream); 
 
 /**
  * 

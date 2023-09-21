@@ -41,37 +41,29 @@ Line *parsebuf(char *buf, size_t *size) {
         }
     }
 
-    Line *text = (Line *)calloc(*size + 2, sizeof(Line));
+    (*size)++;
+
+    Line *text = (Line *)calloc(*size, sizeof(Line));
     assert(text);
 
     Line *textptr = text;
+    textptr->str = buf;
+    textptr++;
 
     while (*buf) {
         //textptr->len++;
 
         if (*buf == '\n' && *(buf + 1) && *(buf + 1) != '\n') {
-//            if (isLetterStr(buf + 1)) {
-                textptr->str = buf + 1;
-//          }
-            //textptr->len = (textptr + 1)->str - (textptr)->str;
-
-            /*ifr(textptr->str) {
-                my_fputs(textptr->str, stdout);
-            }*/
-
-            //printf("len = %zu\n", textptr->len);
+            textptr->str = buf + 1;
+            (textptr - 1)->len = buf - (textptr - 1)->str;
+            ON_DEBUG(fprintf(stderr, "len = %zu", (textptr - 1)->len));
+            ON_DEBUG(my_fputs((textptr - 1)->str, stderr));
             textptr++;
         }
 
+//        textptr->len = buf - textptr->str - 1;
+
         buf++;
-    }
-
-    text->len = text->str - orig_buf;
-
-    for (textptr = text + 1; textptr < text + *size; textptr++) {
-        textptr->len = textptr->str - (textptr-1)->str;
-        /*fprintf(stderr, "len = %d", textptr->len);
-        my_fputs(textptr->str, stderr);*/
     }
 
     return text;
@@ -88,12 +80,11 @@ off_t fsize(char *name) {
     return stbuf.st_size;
 }
 
-void print_text(const Line *text, FILE *stream) {
+void print_text(const Line *text, size_t size, FILE *stream) {
     assert(text);
     
-    while (text->str) {
-        my_fputs(text->str, stream);
-        text++;
+    for (size_t i = 0; i < size; i++) {
+        my_fputs(text[i].str, stream);
     }
 }
 

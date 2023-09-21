@@ -52,18 +52,18 @@ static int tProcess(int argc, char **argv) {
 
     fprintf(ostream, "=============PREFIX SORT=============\n");
     /*StringSort(text, START)*/;
-    Qsort(text, size - 1, sizeof(Line),
+    qsort(text, size, sizeof(Line),
             CmpStrStart);
 
     ON_DEBUG(printf("success sort\n"));
     
-    print_text(text, ostream);
+    print_text(text, size, ostream);
     fprintf(ostream, "\n=============SUFFIX SORT=============\n");
 
     /*StringSort(text, END)*/;
-    qsort(text, size - 1, sizeof(Line),
+    qsort(text, size, sizeof(Line),
             CmpStrEnd);
-    print_text(text, ostream);
+    print_text(text, size, ostream);
 
     fprintf(ostream, "\n=============ORIGINAL TEXT=============\n");
     fputs(buf, ostream);

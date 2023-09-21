@@ -99,7 +99,8 @@ int CmpStrStart(const void *a, const void *b) {
         }
         
         if (*s1.str != *s2.str) {
-            return *s1.str - *s2.str;
+            // return *s1.str - *s2.str;
+            return *s1.str > *s2.str ? 1 : 0;
         }
 
         s1.str++;
@@ -116,8 +117,8 @@ int CmpStrEnd(const void *a, const void *b) {
     Line s2 = *(const Line *)b;
     
     const char *start1 = s1.str, *start2 = s2.str;
-    s1.str += s1.len;
-    s2.str += s2.len;
+    s1.str += s1.len - 1;
+    s2.str += s2.len - 1;
 
     while (s1.str >= start1 && s2.str >= start2) {
         if (s1.str >= start1 && !isalpha(*s1.str)) {
