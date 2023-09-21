@@ -192,14 +192,16 @@ int CmpStrStart(const void *a, const void *b) {
     size_t count = 0;
 
     while (*s1 && *s2 && *s1 != '\n' && *s2 != '\n') {
-        while (!isalpha(*s1) && *s1 && *s1 != '\n') {
+        if (!isalpha(*s1) && *s1 && *s1 != '\n') {
             s1++;
+            continue;
         }
 
 //        assert(count < limit);
 
-        while (!isalpha(*s2) && *s2 && *s2 != '\n') {
+        if (!isalpha(*s2) && *s2 && *s2 != '\n') {
             s2++;
+            continue;
         }
 
 //        assert(count < limit);
@@ -237,14 +239,16 @@ int CmpStrEnd(const void *a, const void *b) {
     }
 
     while (count1 && count2) {
-        while (count1 && !isalpha(*s1)) {
+        if (count1 && !isalpha(*s1)) {
             s1--;
             count1--;
+            continue;
         }
 
-        while (count2 && !isalpha(*s2)) {
+        if (count2 && !isalpha(*s2)) {
             s2--;
             count2--;
+            continue;
         }
 
         if (!count1 || !count2) {
