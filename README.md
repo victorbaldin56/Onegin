@@ -11,4 +11,8 @@ make
 
 ## Usage
 Onegin accepts a single text file and gives the output to the other file.
-To run, enter: ```$(RUNCOMMAND) $(INPUTFILE)```.
+To run, enter: ```./onegin [inputfile] [outputfile]```. The output file
+contains 3 sections:
+1. Result of prefix sort
+2. Result of suffix sort
+3. Original text
