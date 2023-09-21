@@ -21,6 +21,14 @@ const size_t MAXLEN = 100000; // max str len
 /**
  * 
 */
+typedef struct {
+    char *str;
+    size_t len; 
+} Line;
+
+/**
+ * 
+*/
 off_t fsize(char *name);
 
 /**

@@ -49,10 +49,10 @@ static int tProcess(char **argv) {
     size_t size = 0;
     char **text = parsebuf(buf, &size); 
 
-    size_t limit = MAXLEN;
+    //size_t limit = MAXLEN;
     /*StringSort(text, START)*/;
     Qsort(text, size - 1, sizeof(char *),
-            CmpStrStart, &limit);
+            CmpStrStart);
 
     ON_DEBUG(printf("success sort\n"));
     
@@ -60,7 +60,7 @@ static int tProcess(char **argv) {
 
     /*StringSort(text, END)*/;
     Qsort(text, size - 1, sizeof(char *),
-            CmpStrEnd, &limit);
+            CmpStrEnd);
     print_text(text, ostream);
 
     fputs(buf, ostream);

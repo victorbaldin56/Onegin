@@ -8,17 +8,17 @@
 const bool START = 0; // sort starting by the beginning of strings
 const bool END   = 1; // sort starting by the end of strings
 
-typedef int CompareFunc_t(const void *a, const void *b, void *arg);
+typedef int CompareFunc_t(const void *a, const void *b);
 
 /**
  * 
 */
-int CmpStrStart(const void *s1, const void *s2, void *limit);
+int CmpStrStart(const void *s1, const void *s2);
 
 /**
  * 
 */
-int CmpStrEnd(const void *s1, const void *s2, void *limit); 
+int CmpStrEnd(const void *s1, const void *s2); 
 
 /**
  * 
@@ -39,7 +39,7 @@ void BubbleSort(char **text, bool cmpend);
  * 
 */
 void Qsort(void *data, size_t size, size_t elemsize, 
-           CompareFunc_t *CompareFunc, void *arg);
+           CompareFunc_t *CompareFunc);
 
 /**
  * 
