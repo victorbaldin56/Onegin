@@ -30,14 +30,10 @@ Line *parsebuf(char *buf, size_t *size) {
     assert(buf);
     *size = 0;
 
-    char *orig_buf = buf;
-
     for (char *ptr = buf; *ptr; ptr++) {
         //putchar(*ptr);
         if (*ptr == '\n' && *(ptr + 1) != '\n') {
-           // if (isLetterStr(ptr + 1)) {
-                (*size)++;
-           // }
+            (*size)++;
         }
     }
 
@@ -61,10 +57,12 @@ Line *parsebuf(char *buf, size_t *size) {
             textptr++;
         }
 
-//        textptr->len = buf - textptr->str - 1;
-
         buf++;
     }
+
+    assert(textptr - text - 1 < *size);
+
+    (textptr - 1)->len = buf - (textptr - 1)->str;
 
     return text;
 }

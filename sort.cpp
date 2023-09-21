@@ -99,8 +99,8 @@ int CmpStrStart(const void *a, const void *b) {
         }
         
         if (*s1.str != *s2.str) {
-            // return *s1.str - *s2.str;
-            return *s1.str > *s2.str ? 1 : 0;
+            return *s1.str - *s2.str;
+            // return *s1.str > *s2.str ? 1 : 0;
         }
 
         s1.str++;

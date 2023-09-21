@@ -3,5 +3,5 @@
 ☐ Randomize QuickSort
 ✔ Set it to work with different types of data @done (9/16/2023, 9:04:26 PM)
 ✔ Use structure for strings to store the lenght and the pointer @done (9/16/2023, 9:05:12 PM
-☐ Doesn not reach the end
-☐ Reverse comparator
+✔ Doesn not reach the end @done (9/21/2023, 11:56:22 PM)
+✔ Reverse comparator @done (9/21/2023, 11:56:25 PM)
