@@ -2,47 +2,58 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include "colors.h"
 #include "textlib.h"
 #include "sort.h"
 
-static int tProcess(int argc, char **argv);
+static int tProcess(char **argv);
 
 int main(int argc, char **argv) {
     if (argc == 1) {
-        printf("%s: error: no input files\n"
-               "Hint: use --help or -h option to see the usage guide\n", argv[0]);
+        printf(FG_RED);
+        printf("%s: error: no input file\n", argv[0]);
         return -1;
     }
 
-    if (argc >= 2) {
+    if (argc == 2) {
         if (!strncmp(argv[1], "--help", MAXLEN) || !strncmp(argv[1], "-h", MAXLEN)) {
-            printf("Onegin -- string mixer (c) Victor Baldin\n"
-                "Usage: ./onegin [options]\n"
-                "Options:\n"
-                "\t -o FILE");
+            printf("Onegin -- string sorter (c) Victor Baldin, 2023\n"
+                   "Usage: ./onegin [inputfile] [outputfile]\n");
             return 0;
         }
+
+        printf(FG_RED);
+        printf("%s: error: no destination file\n", argv[0]);
+        return -1;
+    }
+
+    if (argc == 3) {
+        //clock_t start = clock();
         
-        clock_t start = clock();
-        
-        if (tProcess(argc, argv)) {
-            fprintf(stderr, "failed to allocate buffer\n");
+        if (tProcess(argv)) {
             return -1;
         }
         
-        clock_t diff = clock() - start;
-        long long msec = diff * 1000 / CLOCKS_PER_SEC;
-        printf("Proceeding time %lld ms\n", msec);
+        ///clock_t diff = clock() - start;
+        //long long msec = diff * 1000 / CLOCKS_PER_SEC;
+        //printf("Proceeding time %lld ms\n", msec);
         
         return 0;
     }
+
+    if (argc > 3) {
+        printf(FG_RED);
+        printf("%s: error: unknown options\n", argv[0]);
+        return -1;
+    }
 }
 
-static int tProcess(int argc, char **argv) {
-    FILE *ostream = fopen("output.txt", "w");
+static int tProcess(char **argv) {
+    FILE *ostream = fopen(argv[2], "w");
     char *buf = readtext(argv[1]);
 
     if (!buf) {
+        printf(FG_RED);
         fprintf(stderr, "failed to allocate buffer\n");
         return -1;
     }
