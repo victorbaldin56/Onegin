@@ -6,7 +6,7 @@
 
 #define PERMS 0666
 
-//#define NDEBUG
+#define NDEBUG
 
 #ifndef NDEBUG
 #define ON_DEBUG(x) x

@@ -55,6 +55,7 @@ static int tProcess(char **argv) {
     if (!buf) {
         printf(FG_RED);
         fprintf(stderr, "failed to allocate buffer\n");
+        free(buf);
         return -1;
     }
 
