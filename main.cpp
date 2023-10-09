@@ -50,7 +50,9 @@ int main(int argc, char **argv) {
 
 static int tProcess(char **argv) {
     FILE *ostream = fopen(argv[2], "w");
+    //assert
     char *buf = readtext(argv[1]);
+    //assert
 
     if (!buf) {
         printf(FG_RED);
@@ -61,7 +63,7 @@ static int tProcess(char **argv) {
 
     size_t size = 0;
     Line *text = parsebuf(buf, &size); 
-
+    //assert
     fprintf(ostream, "=============PREFIX SORT=============\n");
     /*StringSort(text, START)*/;
     qsort(text, size, sizeof(Line),

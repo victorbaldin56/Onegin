@@ -98,15 +98,3 @@ int my_fputs(const char *s, FILE *stream) {
     return 0;
 }
 
-bool isLetterStr(const char *s) {
-    assert(s);
-
-    while (*s != '\n' && *s) {
-        if (isalpha(*s)) {
-            return 1;
-        }
-    }
-
-    ON_DEBUG((stderr, "isLetterStr success\n"));
-    return 0;
-}
